@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Range Slider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="ad-calculator">
+        <div class="range-slider-wrapper">
+            <div class="range-slider-text">Page views za měsíc</div>
+            <div class="range-slider">
+                <span>100 k</span>
+                <input class="page-views" type="range" min="100000" max="5000000" value="200000">
+                <span>5 M</span>
+            </div>
+            <div class="range-slider-output-wrapper"><span class="page-views-output range-slider-output"></span></div>
+        </div>
+        <div class="range-slider-wrapper">
+            <div class="range-slider-text">Vyprodanost prostoru</div>
+            <div class="range-slider">
+                <span>10 %</span>
+                <input class="fill-rate" type="range" min="10" max="100" value="50">
+                <span>100 %</span>
+            </div>
+            <div class="range-slider-output-wrapper"><span class="fill-rate-output range-slider-output"></span></div>
+        </div>
+        <div class="range-slider-wrapper">
+            <div class="range-slider-text">Bannerové a nativní reklamy <div class="range-slider-textnote">(Ad positions display)</div></div>
+            <div class="range-slider">
+                <span>0</span>
+                <input class="ad-positions-display" type="range" min="0" max="10" value="7">
+                <span>10</span>
+            </div>
+            <div class="range-slider-output-wrapper"><span class="ad-positions-display-output range-slider-output"></span></div>
+        </div>
+        <div class="range-slider-wrapper">
+            <div class="range-slider-text">Počet videoreklam na stránce <div class="range-slider-textnote">(Ad positions display)</div></div>
+            <div class="range-slider">
+                <span>0</span>
+                <input class="ad-positions-video" type="range" min="0" max="5" value="3">
+                <span>5</span>
+            </div>
+            <div class="range-slider-output-wrapper"><span class="ad-positions-video-output range-slider-output"></span></div>
+        </div>
+        <div class="potential-earnings">
+            <div class="potential-earnings-txt">Váš možný měsíční výdělek</div>
+            <div class="potential-earnings-output"></div>
+        </div>
+    </div>
+    <script>
+        var pageViews = document.querySelector('.ad-calculator .page-views');
+        var fillRate = document.querySelector('.ad-calculator .fill-rate');
+        var adPositionsDisplay = document.querySelector('.ad-calculator .ad-positions-display');
+        var adPositionsVideo = document.querySelector('.ad-calculator .ad-positions-video');
+        var potentialEarningsOutput = document.querySelector('.ad-calculator .potential-earnings-output');
+
+        var rangeInputsArray = [pageViews, fillRate, adPositionsDisplay, adPositionsVideo];
+
+        function calculatePotentialEarnings() {
+            potentialEarningsOutput.innerHTML = earningsWithBorderValues() + " Kč - " + earningsWithBorderValues(150, 300) + " Kč";
+            function earningsWithBorderValues(borderValuePosDisplay = 50, borderValuePosVideo = 200) {
+                return Math.round((fillRate.value / 100 * pageViews.value * adPositionsDisplay.value * 0.5 * borderValuePosDisplay / 1000) + (fillRate.value / 100 * pageViews.value * adPositionsVideo.value * 0.5 * borderValuePosVideo / 1000)).toLocaleString();
+            }
+        }
+
+        function outputRangeInputValue(rangeInput) {
+            var value = (rangeInput.value * 1).toLocaleString();
+            if (rangeInput.className == "fill-rate") {
+                value += " %";
+            }
+            document.querySelector("." + rangeInput.className + "-output").innerHTML = value;
+        }
+
+        function adjustRunnableTrack(rangeInput) {
+            var diff = rangeInput.getAttribute('max') - rangeInput.getAttribute('min');
+            var value = rangeInput.value - rangeInput.getAttribute('min');
+            var result = (value / diff) * 100;
+            var css = `
+                            input.${rangeInput.className}[type=range]::-webkit-slider-runnable-track {
+                                background: linear-gradient(to right, #cc0000 0%, #cc0000 calc(${result}% + 2px), #e1e1e1 calc(${result}% + 2px))
+                            }                
+                `;
+            if (rangeInput.nextSibling.tagName == "STYLE") {
+                rangeInput.nextSibling.innerHTML = css;
+            } else {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = css;
+                rangeInput.parentNode.insertBefore(style, rangeInput.nextSibling);
+            }
+
+        }
+
+        calculatePotentialEarnings();
+        rangeInputsArray.forEach(item => {
+            outputRangeInputValue(item);
+            adjustRunnableTrack(item);
+            item.addEventListener('input', function () {
+                calculatePotentialEarnings();
+                outputRangeInputValue(item);
+                adjustRunnableTrack(item);
+            });
+        });    
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
