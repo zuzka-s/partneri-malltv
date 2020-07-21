@@ -43,14 +43,22 @@ input[type=range]::-moz-range-track {
   border: 0px solid #000101;
 }
 input[type=range]::-moz-range-thumb {
-  box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  border: 0px solid #000000;
-  height: 20px;
-  width: 39px;
-  border-radius: 7px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+  border: 8px solid #cc0000;
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
   background: #FFFFFF;
   cursor: pointer;
+  margin-top: -10px;
 }
+
+input[type="range"]::-moz-range-progress {
+  background-color: #CC0000; 
+  height: 12px;
+  border-radius: 6px;
+}
+
 input[type=range]::-ms-track {
   width: 100%;
   height: 12.8px;
@@ -62,28 +70,30 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #e2e2e2;
+  background: #CC0000;
   border: 0px solid #000101;
-  border-radius: 50px;
+  border-radius: 6px;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
 }
 input[type=range]::-ms-fill-upper {
   background: #e2e2e2;
   border: 0px solid #000101;
-  border-radius: 50px;
+  border-radius: 6px;
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
 }
 input[type=range]::-ms-thumb {
   box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-  border: 0px solid #000000;
-  height: 20px;
-  width: 39px;
-  border-radius: 7px;
+  border: 8px solid #cc0000;
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
   background: #FFFFFF;
   cursor: pointer;
+  margin-top: -1px;
+
 }
 input[type=range]:focus::-ms-fill-lower {
-  background: #e2e2e2;
+  background: #cc0000;
 }
 input[type=range]:focus::-ms-fill-upper {
   background: #e2e2e2;

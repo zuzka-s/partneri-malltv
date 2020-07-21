@@ -63,7 +63,7 @@
         var rangeInputsArray = [pageViews, fillRate, adPositionsDisplay, adPositionsVideo];
 
         function calculatePotentialEarnings() {
-            potentialEarningsOutput.innerHTML = earningsWithBorderValues() + " Kč - " + earningsWithBorderValues(150, 300) + " Kč";
+            potentialEarningsOutput.innerHTML = earningsWithBorderValues().replace(',', ' ').replace(',', ' ') + " Kč - " + earningsWithBorderValues(150, 300).replace(',', ' ').replace(',', ' ') + " Kč";
             function earningsWithBorderValues(borderValuePosDisplay = 50, borderValuePosVideo = 200) {
                 return Math.round((fillRate.value / 100 * pageViews.value * adPositionsDisplay.value * 0.5 * borderValuePosDisplay / 1000) + (fillRate.value / 100 * pageViews.value * adPositionsVideo.value * 0.5 * borderValuePosVideo / 1000)).toLocaleString();
             }
@@ -95,7 +95,7 @@
                 rangeInput.parentNode.insertBefore(style, rangeInput.nextSibling);
             }
 
-        }
+        } 
 
         calculatePotentialEarnings();
         rangeInputsArray.forEach(item => {
